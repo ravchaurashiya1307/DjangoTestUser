@@ -1,0 +1,32 @@
+<title>
+  User Login
+</title>
+<head>
+  <br><br>
+  <center>
+    <b>User Login</b>
+  </center><br><br><br>
+</head>
+<body>
+<form method="post">
+<Center>
+  {% csrf_token %}
+  <label for="name">User ID: </label><br>
+  <input type="text" id="name" name="name"><br><br>
+  <label for="password">Password: </label><br>
+  <input type="password" id="password" name="password"><br>
+  <label for="Login"></label><br>
+  <input type="submit" id="submit" name="Login"><br><br><br>
+  <p>
+   Defaut User Id: 'admin'<br>
+   Defaut Password: 'admin'
+  </p>
+  {% csrf_token %}
+  {% if mymsg %}
+ <script>
+    alert('{{ mymsg }}');
+</script>
+{% endif %}
+</Center>
+</form>
+</body>

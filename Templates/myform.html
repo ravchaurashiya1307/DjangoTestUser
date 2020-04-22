@@ -1,0 +1,32 @@
+<title>
+  Fill Details
+</title>
+<head>
+  <br><br>
+  <center>
+    <b>Fill Details</b><br><br><br>
+  </center>
+</head>
+<body>
+<form method="post">
+<Center>
+  {% csrf_token %}
+  <label for="name">Name:</label><br>
+  <input type="text" id="name" name="name"><br>
+  <label for="dob">Date Of Birth:</label><br>
+  <input type="date" id="dob" name="dob"><br>
+  <label for="email">Email:</label><br>
+  <input type="text" id="email" name="email"><br>
+  <label for="pn">Mobile No.:</label><br>
+  <input type="text" id="pn " name="pn"><br>
+  <label for="submit"></label><br>
+  <input type="submit" id="submit" name="submit"><br>
+  {% csrf_token %}
+  {% if mymsg %}
+ <script>
+    alert('{{ mymsg }}');
+</script>
+{% endif %}
+</Center>
+</form>
+</body>
