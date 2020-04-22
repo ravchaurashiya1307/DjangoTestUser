@@ -16,7 +16,7 @@ def login(request):
         name = str(request.POST['name'])
         pwd = str(request.POST['password'])
         if(name=='admin' and pwd=='admin'):
-            return redirect('/user/')
+            return redirect('/user-form/')
         else:
             return render(request, 'login.html', {'mymsg':'Invalid Details'})
     elif request.method == 'GET':
