@@ -1,32 +1,79 @@
+{% load static %}
 <title>
-  Fill Details
+  Registration
 </title>
 <head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">UserTest</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user/">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/view/">View Users</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
   <br><br>
   <center>
-    <b>Fill Details</b><br><br><br>
+    <b style="color:white">Fill Details</b><br><br><br>
   </center>
 </head>
 <body>
-<form method="post">
+<body background = "{% static 'images/bg.jpg' %}">
+<form method="post" enctype="multipart/form-data">
 <Center>
   {% csrf_token %}
-  <label for="name">Name:</label><br>
-  <input type="text" id="name" name="name"><br>
-  <label for="dob">Date Of Birth:</label><br>
-  <input type="date" id="dob" name="dob"><br>
-  <label for="email">Email:</label><br>
-  <input type="text" id="email" name="email"><br>
-  <label for="pn">Mobile No.:</label><br>
-  <input type="text" id="pn " name="pn"><br>
+<!--  <label for="name">Name:</label><br>-->
+<!--  <input type="text" id="name" name="name"><br>-->
+<!--  <label for="dob">Date Of Birth:</label><br>-->
+<!--  <input type="date" id="dob" name="dob"><br>-->
+<!--  <label for="email">Email:</label><br>-->
+<!--  <input type="text" id="email" name="email"><br>-->
+<!--  <label for="pn">Mobile No.:</label><br>-->
+<!--  <input type="text" id="pn " name="pn"><br>-->
+<!--  <label for="img">Image:</label><br>-->
+<!--  <input type="image" id="img" name="pic"><br>-->
+  <table class="text-white">
+  {{form}}
+  </table>
+  <br>
   <label for="submit"></label><br>
   <input type="submit" id="submit" name="submit"><br>
+
   {% csrf_token %}
   {% if mymsg %}
  <script>
     alert('{{ mymsg }}');
 </script>
 {% endif %}
+  <br><br><br><br><br><br>
+  <footer class="footer">
+
+      <div class="container-full">
+         <div class="p-3 mb-2 bg-dark text-white">
+        <span class="text-muted">@copyright 2020</span>
+           </div>
+      </div>
+
+    </footer>
 </Center>
 </form>
 </body>

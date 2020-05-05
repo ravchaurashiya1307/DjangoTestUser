@@ -8,18 +8,21 @@ import smtplib
 import requests
 from . import executor
 from django.contrib import messages
+from .models import NewUser, NewForm
 
 email=''
+id=0
 
 def login(request):
     if request.method=='POST':
         name = str(request.POST['name'])
         pwd = str(request.POST['password'])
         if(name=='admin' and pwd=='admin'):
-            return redirect('/user-form/')
+            return redirect('/user/')
         else:
             return render(request, 'login.html', {'mymsg':'Invalid Details'})
     elif request.method == 'GET':
+        #NewUser.objects.all().delete()
         return render(request, 'login.html')
 
 
@@ -69,19 +72,46 @@ def validatePN(pn):
         return False
 
 def User(request):
-    global email
+    global email, id
     if request.method=='POST':
         em=Email()
-        name = str(request.POST['name'])
-        dob = str(request.POST['dob'])
-        email = str(request.POST['email'])
-        pn = str(request.POST['pn'])
-        print(name, dob, email, pn)
-        if(validateName(name) and validateDob(dob) and validateEmail(email) and validatePN(pn)):
+        form = NewForm(request.POST, request.FILES)
+        a=form.data.dict()
+        files=request.FILES['image']
+        print(files)
+        name = str(a['name'])
+        dob = str(a['dob'])
+        email = str(a['email'])
+        pn = str(a['phone'])
+        # print(name, dob, email, pn)
+        #
+        # print(form.data.dict()['name'])
+
+        if(form.is_valid() and validateName(name) and validateDob(dob) and validateEmail(email) and validatePN(pn)):
+            form.save()
             executor.submit(em.sendEmail)
-            return HttpResponse("<title>Registration Successful</title><body><center>Your account is successfully created.</center></body>")
+            return render(request, 'success.html',{'x':form.data.dict(), 'image':files})
         else:
             messages.info(request, 'Invalid Details')
-            return render(request, 'myform.html', {'mymsg':'Invalid Details'})
+            return render(request, 'myform.html', {'mymsg':'Invalid Details', 'form':NewForm})
     elif request.method == 'GET':
-        return render(request, 'myform.html')
+        return render(request, 'myform.html', {'form':NewForm})
+
+
+def viewUsers(request):
+    a = NewUser.objects.all()
+    userDict={}
+    i=0
+    userDict['name']=[]
+    userDict['email']=[]
+    userDict['dob']=[]
+    userDict['pn']=[]
+    for x in a:
+        userDict['name'].append(x.name)
+        userDict['email'].append(x.email)
+        userDict['dob'].append(x.dob)
+        userDict['pn'].append(x.phone)
+    import pandas as pd
+    df=pd.DataFrame(userDict)
+    df.to_csv("data.csv")
+    return render(request, 'myform2.html', {'data': a})
