@@ -92,9 +92,9 @@ def User(request):
             print(form.files.get('image'))
             executor.submit(em.sendEmail)
             b = NewUser.objects.filter(name=name)
-            c = NewUser.objects.filter(dob=dob)
-            d = NewUser.objects.filter(phone=pn)
-            e = NewUser.objects.filter(email=email)
+            c = b.objects.filter(dob=dob)
+            d = c.objects.filter(phone=pn)
+            e = d.objects.filter(email=email)
             for x in e:
                 data=x
                 break
