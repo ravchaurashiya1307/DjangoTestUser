@@ -22,7 +22,7 @@ def login(request):
         else:
             return render(request, 'login.html', {'mymsg':'Invalid Details'})
     elif request.method == 'GET':
-        #NewUser.objects.all().delete()
+        # NewUser.objects.all().delete()
         return render(request, 'login.html')
 
 
@@ -77,8 +77,8 @@ def User(request):
         em=Email()
         form = NewForm(request.POST, request.FILES)
         a=form.data.dict()
-        files=request.FILES['image']
-        print(files)
+        file=request.FILES['image']
+        print(file)
         name = str(a['name'])
         dob = str(a['dob'])
         email = str(a['email'])
@@ -89,8 +89,17 @@ def User(request):
 
         if(form.is_valid() and validateName(name) and validateDob(dob) and validateEmail(email) and validatePN(pn)):
             form.save()
+            print(form.files.get('image'))
             executor.submit(em.sendEmail)
-            return render(request, 'success.html',{'x':form.data.dict(), 'image':files})
+            b = NewUser.objects.filter(name=name)
+            c = NewUser.objects.filter(dob=dob)
+            d = NewUser.objects.filter(phone=pn)
+            e = NewUser.objects.filter(email=email)
+            for x in e:
+                data=x
+                break
+            # return render(request, 'success.html',{'x':form.data.dict(), 'image':file})
+            return render(request, 'success.html',{'x':data, 'image':file})
         else:
             messages.info(request, 'Invalid Details')
             return render(request, 'myform.html', {'mymsg':'Invalid Details', 'form':NewForm})
