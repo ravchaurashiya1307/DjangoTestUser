@@ -91,6 +91,7 @@ def User(request):
             form.save()
             print(form.files.get('image'))
             executor.submit(em.sendEmail)
+            # em.sendEmail()
             b = NewUser.objects.filter(name=name)
             c = b.filter(dob=dob)
             d = c.filter(phone=pn)
